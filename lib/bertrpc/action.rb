@@ -28,7 +28,7 @@ module BERTRPC
       while size < len
         r, w, e = IO.select([sock], [], [], timeout)
         raise Errno::EAGAIN if r.nil?
-        msg, sender = sock.recvfrom(len - size)
+        msg, sender = sock.recv(len - size)
         raise Errno::ECONNRESET if msg.size == 0
         size += msg.size
         data << msg
