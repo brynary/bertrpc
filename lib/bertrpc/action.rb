@@ -41,6 +41,11 @@ module BERTRPC
       sock = connect_to(@svc.host, @svc.port, timeout)
 
       if @req.options
+        if @req.options[:priority]
+          info_bert = encode_ruby_request(t[:info, :priority, [@req.options[:priority]]])
+          write(sock, info_bert)
+        end
+
         if @req.options[:cache] && @req.options[:cache][0] == :validation
           token = @req.options[:cache][1]
           info_bert = encode_ruby_request([:info, :cache, [:validation, token]])

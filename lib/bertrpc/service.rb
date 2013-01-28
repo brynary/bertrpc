@@ -26,8 +26,12 @@ module BERTRPC
           unless cache[0] == :validation && cache[1].is_a?(String)
             raise InvalidOption.new("Valid :cache args are [:validation, String]")
           end
-        else
-          raise InvalidOption.new("Valid options are :cache")
+        end
+
+        if priority = options[:priority]
+          unless [:high, :low].include?(priority)
+            raise InvalidOption.new("Valid :priority values are :low or :high")
+          end
         end
       end
     end
